@@ -1,5 +1,7 @@
 # comfyui-teaching-kit · ComfyUI 教学工作流
 
+![CI](https://github.com/Leslieryin/comfyui-teaching-kit/actions/workflows/ci.yml/badge.svg)
+
 两个开箱即用的 ComfyUI 教学工作流，围绕**本地 GGUF 量化模型**搭建——显存友好、离线可跑，适合在教学中演示「文生图」与「图生图指令编辑」两条主线。
 
 ## 工作流

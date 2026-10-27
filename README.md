@@ -10,6 +10,8 @@
 
 15 节点。加载参考图后用自然语言指令改图（换姿势/视角/构图），核心节点：
 
+![Qwen-Image 编辑工作流：左侧加载参考图，中间的多角度相机节点输出镜头提示词，右侧是采样、解码与保存](docs/workflow-qwen.png)
+
 - `UnetLoaderGGUF` + `CLIPLoaderGGUF`：Qwen-Image / Qwen-Image-Edit GGUF 量化模型
 - `TextEncodeQwenImageEditPlus`：指令式编辑的文本编码（输入图 + 编辑指令）
 - `QwenMultiangleCameraNode` / `LaoLi_Lineup`：多角度机位与构图辅助（第三方自定义节点，见下）
@@ -17,7 +19,11 @@
 
 ### `workflows/教学用工作流-zimage.json` — Z-Image 文生图
 
-10 节点。极简文生图教学样例：`UNETLoader`（Z-Image GGUF）+ `CLIPTextEncode` 正/负提示词 + `KSampler` + `VAEDecode`，适合作为「第一个 ComfyUI 工作流」讲解节点连线概念。
+10 节点。极简文生图教学样例：`UNETLoader`（Z-Image 权重）+ `CLIPTextEncode` 正/负提示词 + `KSampler` + `VAEDecode`，适合作为「第一个 ComfyUI 工作流」讲解节点连线概念。
+
+![Z-Image 文生图工作流：提示词 → 潜空间 → 采样 → 解码 → 保存，共 10 个节点](docs/workflow-zimage.png)
+
+> 截图为在 8 GB 显存机器上实际加载的效果，模型文件按本机已有的量化版本选择（工作流 JSON 里的默认文件名对应原作者的权重版本）。
 
 ## 使用
 

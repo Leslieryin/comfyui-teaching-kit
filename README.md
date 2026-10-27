@@ -10,12 +10,12 @@
 
 15 节点。加载参考图后用自然语言指令改图（换姿势/视角/构图），核心节点：
 
-![Qwen-Image 编辑工作流：左侧加载参考图，中间的多角度相机节点输出镜头提示词，右侧是采样、解码与保存](docs/workflow-qwen.png)
-
 - `UnetLoaderGGUF` + `CLIPLoaderGGUF`：Qwen-Image / Qwen-Image-Edit GGUF 量化模型
 - `TextEncodeQwenImageEditPlus`：指令式编辑的文本编码（输入图 + 编辑指令）
-- `QwenMultiangleCameraNode` / `LaoLi_Lineup`：多角度机位与构图辅助（第三方自定义节点，见下）
+- `QwenMultiangleCameraNode` / `LaoLi_Lineup`：多角度机位与构图辅助（第三方自定义节点，安装见「使用」第 2 条）
 - `VAEEncode → KSampler → VAEDecode`：标准采样链，`ModelSamplingAuraFlow` 调调度
+
+![Qwen-Image 编辑工作流：左侧加载参考图，中间的多角度相机节点输出镜头提示词，右侧是采样、解码与保存](docs/workflow-qwen.png)
 
 ### `workflows/教学用工作流-zimage.json` — Z-Image 文生图
 

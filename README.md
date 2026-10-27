@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/Leslieryin/comfyui-teaching-kit/actions/workflows/ci.yml/badge.svg)
 
-两个开箱即用的 ComfyUI 教学工作流，围绕**本地 GGUF 量化模型**搭建——显存友好、离线可跑，适合在教学中演示「文生图」与「图生图指令编辑」两条主线。
+两个开箱即用的 ComfyUI 教学工作流，围绕**本地量化模型**（GGUF / fp8）搭建——显存友好、离线可跑，适合在教学中演示「文生图」与「图生图指令编辑」两条主线。
 
 ## 工作流
 
@@ -29,7 +29,7 @@
 
 1. ComfyUI 中 `Load` 对应 JSON（或拖入画布）
 2. 首次加载会提示缺失模型/节点，按红字提示安装：
-   - **模型**：Qwen-Image-Edit / Z-Image 的 GGUF 权重与对应 text encoder、VAE（放到 `models` 对应目录，工作流内节点会显示期望文件名）
+   - **模型**：Qwen-Image-Edit 侧是 GGUF 的 UNet 与 CLIP；Z-Image 侧 UNet 为 safetensors（fp8/bf16）、CLIP 为 GGUF。另需各自的 VAE（放到 `models` 对应目录，工作流内节点会显示期望文件名）
    - **自定义节点**（qwen 工作流）：ComfyUI Manager 搜索安装 `LaoLi` / 多角度机位相关节点包；`*GGUF` 加载器需安装 `ComfyUI-GGUF`
 3. 队列执行，出图在 `SaveImage`
 

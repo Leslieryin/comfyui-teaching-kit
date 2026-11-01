@@ -392,7 +392,7 @@
         "Node name for S&R": "UNETLoader"
       },
       "widgets_values": [
-        "Zimage\\z_image_turbo_bf16.safetensors",
+        "Zimage/z_image_turbo_bf16.safetensors",
         "default"
       ]
     }

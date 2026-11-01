@@ -34,7 +34,7 @@
         "Node name for S&R": "UnetLoaderGGUF"
       },
       "widgets_values": [
-        "Qwen\\qwen-image-edit-2511-Q8_0.gguf"
+        "Qwen/qwen-image-edit-2511-Q8_0.gguf"
       ]
     },
     {
@@ -480,7 +480,7 @@
         "Node name for S&R": "LoraLoaderModelOnly"
       },
       "widgets_values": [
-        "Qwen-Edit\\Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors",
+        "Qwen-Edit/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors",
         1
       ]
     },
@@ -520,7 +520,7 @@
         "Node name for S&R": "LoraLoaderModelOnly"
       },
       "widgets_values": [
-        "Qwen-Edit\\qwen-image-edit-2511-multiple-angles-lora.safetensors",
+        "Qwen-Edit/qwen-image-edit-2511-multiple-angles-lora.safetensors",
         1
       ]
     },

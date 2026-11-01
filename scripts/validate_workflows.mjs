@@ -57,17 +57,56 @@ for (const file of files) {
   }
 
   let maxLinkId = -1;
+  const seenLinkIds = new Set();
+  const declaredLinks = new Set();
+
+  // 先收集每个节点输入/输出槽位声明的 link id，用于与顶层 links 交叉印证
+  for (const node of nodes) {
+    for (const side of ['inputs', 'outputs']) {
+      if (!Array.isArray(node[side])) continue;
+      node[side].forEach((slot, i) => {
+        if (slot && typeof slot.link === 'number') {
+          declaredLinks.add(slot.link);
+          const cap = side === 'inputs' ? (Array.isArray(node.inputs) ? node.inputs.length : 0)
+                                        : (Array.isArray(node.outputs) ? node.outputs.length : 0);
+          if (i >= cap) errors.push(`节点 ${node.id} 的 ${side}[${i}] 槽位越界（共 ${cap} 个）`);
+        }
+      });
+    }
+  }
 
   for (const link of links) {
     if (!Array.isArray(link) || link.length !== 6) {
       errors.push(`连线格式错误（应为 6 元组）: ${JSON.stringify(link)}`);
       continue;
     }
-    const [linkId, originNode, originSlot, targetNode, targetSlot] = link;
+    const [linkId, originNode, originSlot, targetNode, targetSlot, linkType] = link;
     if (typeof linkId === 'number') maxLinkId = Math.max(maxLinkId, linkId);
+    if (seenLinkIds.has(linkId)) errors.push(`连线 id 重复: ${linkId}`);
+    seenLinkIds.add(linkId);
     if (!nodeIds.has(originNode)) errors.push(`连线 ${linkId} 的起点节点 ${originNode} 不存在`);
     if (!nodeIds.has(targetNode)) errors.push(`连线 ${linkId} 的终点节点 ${targetNode} 不存在`);
     if (originSlot < 0 || targetSlot < 0) errors.push(`连线 ${linkId} 的槽位为负数`);
+    // 槽位上界：起点输出槽 / 终点输入槽
+    if (nodeIds.has(originNode)) {
+      const n = nodes.find((x) => x.id === originNode);
+      const cap = Array.isArray(n?.outputs) ? n.outputs.length : 0;
+      if (originSlot >= cap) errors.push(`连线 ${linkId} 的起点槽位 ${originSlot} 超出节点 ${originNode} 的输出槽数 ${cap}`);
+    }
+    if (nodeIds.has(targetNode)) {
+      const n = nodes.find((x) => x.id === targetNode);
+      const cap = Array.isArray(n?.inputs) ? n.inputs.length : 0;
+      if (targetSlot >= cap) errors.push(`连线 ${linkId} 的终点槽位 ${targetSlot} 超出节点 ${targetNode} 的输入槽数 ${cap}`);
+    }
+    // 交叉印证：顶层 links 数组里的连线，应被两端节点各自的 inputs/outputs.link 声明
+    if (!declaredLinks.has(linkId)) {
+      errors.push(`连线 ${linkId} 存在于顶层 links 但未在两端节点的槽位中声明`);
+    }
+  }
+
+  // 反向印证：节点槽位声明的 link 必须存在于顶层 links
+  for (const id of declaredLinks) {
+    if (!seenLinkIds.has(id)) errors.push(`节点槽位声明的连线 ${id} 不存在于顶层 links 数组`);
   }
 
   if (typeof wf.last_link_id === 'number' && maxLinkId > wf.last_link_id) {

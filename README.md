@@ -23,6 +23,8 @@
 
 10 节点。极简文生图教学样例：`UNETLoader`（Z-Image 权重）+ `CLIPTextEncode` 正/负提示词 + `KSampler` + `VAEDecode`，适合作为「第一个 ComfyUI 工作流」讲解节点连线概念。默认提示词是中性静物（书桌与热茶），课堂上直接让学生改提示词出图。
 
+![Z-Image 文生图工作流：左侧加载 UNet / CLIP(GGUF) / VAE 模型，中部正/负提示词编码，右侧经 K 采样器、VAE 解码后保存图像](docs/workflow-zimage.png)
+
 > 节点链路：提示词 → 潜空间 → 采样 → 解码 → 保存，共 10 个节点。模型文件按本机已有的量化版本选择（工作流 JSON 里的默认文件名对应原作者的权重版本）。
 
 ## 使用
